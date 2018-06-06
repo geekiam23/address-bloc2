@@ -14,7 +14,7 @@ class AddressBook < BlocRecord::Base
   end
 
   def entries
-    Entry.where(address_book_id: self.id)
+    Entry.order("name ASC, phone_number DESC")
   end
 
   def find_entry(name)
