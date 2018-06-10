@@ -8,7 +8,6 @@ class MenuController
   end
 
   def main_menu
-    puts @address_book.name
     puts "#{@address_book.name} Address Book Selected\n#{@address_book.entries.count} entries"
     puts "0 - Switch AddressBook"
     puts "1 - View all entries"
@@ -157,18 +156,21 @@ class MenuController
   end
 
   def edit_entry(entry)
+    updates = {}
     print "Updated name: "
     name = gets.chomp
+    updates[:name] = name unless name.empty?
     print "Updated phone number: "
     phone_number = gets.chomp
+    updates[:phone_number] = phone_number unless phone_number.empty?
     print "Updated email: "
     email = gets.chomp
-    entry.name = name if !name.empty?
-    entry.phone_number = phone_number if !phone_number.empty?
-    entry.email = email if !email.empty?
+    updates[:email] = email unless email.empty?
+ 
+    entry.update_attributes(updates)
     system "clear"
     puts "Updated entry:"
-    puts entry
+    puts Entry.find(entry.id)
   end
 
   def search_submenu(entry)
